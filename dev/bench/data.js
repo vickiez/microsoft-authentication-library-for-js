@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1730236031135,
+  "lastUpdate": 1730239447247,
   "repoUrl": "https://github.com/AzureAD/microsoft-authentication-library-for-js",
   "entries": {
     "msal-node client-credential Regression Test": [
@@ -13104,6 +13104,44 @@ window.BENCHMARK_DATA = {
             "range": "±2.09%",
             "unit": "ops/sec",
             "extra": "221 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "thomas.norling@microsoft.com",
+            "name": "Thomas Norling",
+            "username": "tnorling"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "df26209f7cf78f5e27c9d001eb24e9741344a8a7",
+          "message": "Collect additional telemetry for crypto/runtime errors (#7394)\n\n- Adds additional check for the subtle property on crypto\r\n- Fixes error stack logic to keep top 5 lines instead of bottom 5\r\n- Collects common, known runtime errors and redacts when necessary\r\n\r\n---------\r\n\r\nCo-authored-by: Konstantin Shabelko <kshabelko@microsoft.com>",
+          "timestamp": "2024-10-29T14:58:28-07:00",
+          "tree_id": "54633c38a4453245172167fd88b0dc3ccd356870",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/commit/df26209f7cf78f5e27c9d001eb24e9741344a8a7"
+        },
+        "date": 1730239446009,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsFirstItemInTheCache",
+            "value": 227996,
+            "range": "±1.28%",
+            "unit": "ops/sec",
+            "extra": "233 samples"
+          },
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsLastItemInTheCache",
+            "value": 188755,
+            "range": "±1.97%",
+            "unit": "ops/sec",
+            "extra": "222 samples"
           }
         ]
       }
