@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1729531670169,
+  "lastUpdate": 1730225885949,
   "repoUrl": "https://github.com/AzureAD/microsoft-authentication-library-for-js",
   "entries": {
     "msal-node client-credential Regression Test": [
@@ -13028,6 +13028,44 @@ window.BENCHMARK_DATA = {
             "range": "±1.94%",
             "unit": "ops/sec",
             "extra": "222 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "thomas.norling@microsoft.com",
+            "name": "Thomas Norling",
+            "username": "tnorling"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "861101c411d1cecfc6cd74b5d2fea506a4a18e75",
+          "message": "Refactor NetworkManager into BaseClient (#7386)\n\n- Refactors sole function in NetworkManager into BaseClient\r\nconsolidating post logic to one place and allowing for direct collection\r\nof telemetry before / after the call (more on this in a follow up PR)\r\n- Moves requestId telemetry collection to right after the network call,\r\nensuring it gets emitted even if an error is thrown later",
+          "timestamp": "2024-10-29T11:12:36-07:00",
+          "tree_id": "977b6a66ce2a2e81f9dc333f45b0fed41ff9dbc0",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/commit/861101c411d1cecfc6cd74b5d2fea506a4a18e75"
+        },
+        "date": 1730225884759,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsFirstItemInTheCache",
+            "value": 191822,
+            "range": "±2.09%",
+            "unit": "ops/sec",
+            "extra": "222 samples"
+          },
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsLastItemInTheCache",
+            "value": 192030,
+            "range": "±2.08%",
+            "unit": "ops/sec",
+            "extra": "223 samples"
           }
         ]
       }
