@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1730225885949,
+  "lastUpdate": 1730236031135,
   "repoUrl": "https://github.com/AzureAD/microsoft-authentication-library-for-js",
   "entries": {
     "msal-node client-credential Regression Test": [
@@ -13066,6 +13066,44 @@ window.BENCHMARK_DATA = {
             "range": "±2.08%",
             "unit": "ops/sec",
             "extra": "223 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "thomas.norling@microsoft.com",
+            "name": "Thomas Norling",
+            "username": "tnorling"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1cc408ed80e917f384025a99f137d139f98eaca7",
+          "message": "Add additional telemetry for POST request failures (#7387)\n\nAdds some additional errors and telemetry for POST request failures",
+          "timestamp": "2024-10-29T14:01:36-07:00",
+          "tree_id": "7e7ec4d972f5a3c755808fb85cb97289439c4aab",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/commit/1cc408ed80e917f384025a99f137d139f98eaca7"
+        },
+        "date": 1730236029929,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsFirstItemInTheCache",
+            "value": 201330,
+            "range": "±2.16%",
+            "unit": "ops/sec",
+            "extra": "227 samples"
+          },
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsLastItemInTheCache",
+            "value": 201623,
+            "range": "±2.09%",
+            "unit": "ops/sec",
+            "extra": "221 samples"
           }
         ]
       }
