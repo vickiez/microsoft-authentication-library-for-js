@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1730319120933,
+  "lastUpdate": 1730329818469,
   "repoUrl": "https://github.com/AzureAD/microsoft-authentication-library-for-js",
   "entries": {
     "msal-node client-credential Regression Test": [
@@ -13180,6 +13180,44 @@ window.BENCHMARK_DATA = {
             "range": "±2.01%",
             "unit": "ops/sec",
             "extra": "222 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "87724641+Robbie-Microsoft@users.noreply.github.com",
+            "name": "Robbie-Microsoft",
+            "username": "Robbie-Microsoft"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "933f21db75177809d3fa541dc703ae7eea6e2545",
+          "message": "Updated CodeOwners (#7391)\n\nThis updates the reviewers for MSALJS Confidential Client code.\r\n\r\nIndividual names were removed, in favor of [ID4S MSAL\r\nteam](https://github.com/orgs/AzureAD/teams/id4s-msal-team).\r\n\r\nThis mirrors the .net\r\n[CodeOwners](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/blob/main/CODEOWNERS)\r\nfile.",
+          "timestamp": "2024-10-30T19:04:47-04:00",
+          "tree_id": "67f377278aa139c8ed4438aa259baa03b1e1d1ec",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/commit/933f21db75177809d3fa541dc703ae7eea6e2545"
+        },
+        "date": 1730329816593,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsFirstItemInTheCache",
+            "value": 210125,
+            "range": "±2.05%",
+            "unit": "ops/sec",
+            "extra": "223 samples"
+          },
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsLastItemInTheCache",
+            "value": 189917,
+            "range": "±2.01%",
+            "unit": "ops/sec",
+            "extra": "223 samples"
           }
         ]
       }
