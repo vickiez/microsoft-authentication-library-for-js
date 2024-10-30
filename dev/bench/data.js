@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1730239447247,
+  "lastUpdate": 1730319120933,
   "repoUrl": "https://github.com/AzureAD/microsoft-authentication-library-for-js",
   "entries": {
     "msal-node client-credential Regression Test": [
@@ -13140,6 +13140,44 @@ window.BENCHMARK_DATA = {
             "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsLastItemInTheCache",
             "value": 188755,
             "range": "±1.97%",
+            "unit": "ops/sec",
+            "extra": "222 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hemoral@microsoft.com",
+            "name": "Hector Morales",
+            "username": "hectormmg"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b18c3da24fb9d24a0a50dfcfa6137d006937cdd8",
+          "message": "Replace MSA lab account with hardcoded UPN (#7397)\n\nThis PR replaces the lab-obtained UPN for the B2C MSA account with a\r\nhardcoded e-mail as a temporary measure until it can be added to the lab\r\nAPI",
+          "timestamp": "2024-10-30T13:06:24-07:00",
+          "tree_id": "4d4dddabb03fe0f8423e6e38e5a97587aa9e1ab3",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/commit/b18c3da24fb9d24a0a50dfcfa6137d006937cdd8"
+        },
+        "date": 1730319118849,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsFirstItemInTheCache",
+            "value": 200989,
+            "range": "±2.38%",
+            "unit": "ops/sec",
+            "extra": "222 samples"
+          },
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsLastItemInTheCache",
+            "value": 189551,
+            "range": "±2.01%",
             "unit": "ops/sec",
             "extra": "222 samples"
           }
