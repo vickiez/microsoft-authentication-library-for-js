@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix CVEs #7398",
+  "packageName": "@azure/msal-angular",
+  "email": "kshabelko@microsoft.com",
+  "dependentChangeType": "patch"
+}
