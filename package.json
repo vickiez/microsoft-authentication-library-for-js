@@ -64,6 +64,11 @@
         "react-scripts": {
             "resolve-url-loader": ">=5.0.0",
             "nth-check": ">=2.0.1"
+        },
+        "puppeteer": {
+            "puppeteer-core": {
+                "ws": ">=8.17.1"
+            }
         }
     }
 }
