@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1730329818469,
+  "lastUpdate": 1730333932245,
   "repoUrl": "https://github.com/AzureAD/microsoft-authentication-library-for-js",
   "entries": {
     "msal-node client-credential Regression Test": [
@@ -13218,6 +13218,44 @@ window.BENCHMARK_DATA = {
             "range": "±2.01%",
             "unit": "ops/sec",
             "extra": "223 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "87724641+Robbie-Microsoft@users.noreply.github.com",
+            "name": "Robbie-Microsoft",
+            "username": "Robbie-Microsoft"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "098a9572d60b156f6e927188d6544b46b0dd2351",
+          "message": "Region auto enable on env variable (#7354)\n\nOn creation of a ConfidentialClientApplication, MSAL shall detect env\r\nvariable MSAL_FORCE_REGION, which will be set to a specific region (e.g.\r\nwestus1)\r\n\r\nIf this env variable is set, MSAL shall opt-in to ESTS-R with the value\r\nof this variable.\r\n\r\nThis feature request is located\r\n[here](https://github.com/AzureAD/microsoft-authentication-library-for-js/issues/7328).",
+          "timestamp": "2024-10-30T20:13:23-04:00",
+          "tree_id": "cd7228085e1c51fd2692de49270ddbfdeb88c620",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/commit/098a9572d60b156f6e927188d6544b46b0dd2351"
+        },
+        "date": 1730333930842,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsFirstItemInTheCache",
+            "value": 189289,
+            "range": "±1.97%",
+            "unit": "ops/sec",
+            "extra": "222 samples"
+          },
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsLastItemInTheCache",
+            "value": 195191,
+            "range": "±2.15%",
+            "unit": "ops/sec",
+            "extra": "222 samples"
           }
         ]
       }
