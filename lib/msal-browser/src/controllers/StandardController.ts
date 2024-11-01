@@ -30,6 +30,7 @@ import {
     InteractionRequiredAuthErrorCodes,
     PersistentCacheKeys,
     CacheManager,
+    formatAuthorityUri,
 } from "@azure/msal-common/browser";
 import {
     BrowserCacheManager,
@@ -264,7 +265,11 @@ export class StandardController implements IController {
             nativeCacheOptions,
             this.browserCrypto,
             this.logger,
-            undefined,
+            {
+                canonicalAuthority: formatAuthorityUri(
+                    this.config.auth.authority
+                ),
+            },
             this.performanceClient
         );
 

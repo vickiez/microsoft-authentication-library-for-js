@@ -13,6 +13,7 @@ import {
     IPerformanceClient,
     DEFAULT_CRYPTO_IMPLEMENTATION,
     AccountFilter,
+    formatAuthorityUri,
 } from "@azure/msal-common/browser";
 import { ITokenCache } from "../cache/ITokenCache.js";
 import { BrowserConfiguration } from "../config/Configuration.js";
@@ -105,7 +106,11 @@ export class UnknownOperatingContextController implements IController {
                   this.config.cache,
                   this.browserCrypto,
                   this.logger,
-                  undefined,
+                  {
+                      canonicalAuthority: formatAuthorityUri(
+                          this.config.auth.authority
+                      ),
+                  },
                   this.performanceClient
               )
             : DEFAULT_BROWSER_CACHE_MANAGER(

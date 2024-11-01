@@ -4,36 +4,30 @@
  */
 
 import {
-    ClientConfiguration,
-    Constants,
-    AccountEntity,
-    AppMetadataEntity,
-    ThrottlingEntity,
-    IdTokenEntity,
-    AccessTokenEntity,
-    RefreshTokenEntity,
-    ProtocolMode,
-    AuthorityOptions,
-    AuthorityMetadataEntity,
-    ValidCredentialType,
-    Logger,
-    LogLevel,
-    TokenKeys,
-    ServerTelemetryManager,
-    createClientAuthError,
-    ClientAuthErrorCodes,
-    CacheHelpers,
-    Authority,
-} from "../../src";
-import {
     RANDOM_TEST_GUID,
     TEST_CONFIG,
     TEST_CRYPTO_VALUES,
     TEST_POP_VALUES,
-} from "../test_kit/StringConstants";
-
-import { CacheManager } from "../../src/cache/CacheManager";
-import { ServerTelemetryEntity } from "../../src/cache/entities/ServerTelemetryEntity";
+} from "../test_kit/StringConstants.js";
+import { CacheManager } from "../../src/cache/CacheManager.js";
+import { ServerTelemetryEntity } from "../../src/cache/entities/ServerTelemetryEntity.js";
+import { AccountEntity } from "../../src/cache/entities/AccountEntity.js";
+import { IdTokenEntity } from "../../src/cache/entities/IdTokenEntity.js";
+import { AccessTokenEntity } from "../../src/cache/entities/AccessTokenEntity.js";
+import { RefreshTokenEntity } from "../../src/cache/entities/RefreshTokenEntity.js";
+import { AppMetadataEntity } from "../../src/cache/entities/AppMetadataEntity.js";
+import { AuthorityMetadataEntity } from "../../src/cache/entities/AuthorityMetadataEntity.js";
+import { ThrottlingEntity } from "../../src/cache/entities/ThrottlingEntity.js";
+import { TokenKeys, ValidCredentialType } from "../../src/cache/utils/CacheTypes.js";
+import * as CacheHelpers from "../../src/cache/utils/CacheHelpers.js";
+import { ProtocolMode } from "../../src/authority/ProtocolMode.js";
+import { ClientConfiguration } from "../../src/config/ClientConfiguration.js";
+import { Logger, LogLevel } from "../../src/logger/Logger.js";
+import { AuthorityOptions } from "../../src/authority/AuthorityOptions.js";
+import { Authority } from "../../src/authority/Authority.js";
+import { ClientAuthErrorCodes, createClientAuthError } from "../../src/error/ClientAuthError.js";
+import { ServerTelemetryManager } from "../../src/telemetry/server/ServerTelemetryManager.js";
+import { Constants } from "../../src/utils/Constants.js";
 
 const ACCOUNT_KEYS = "ACCOUNT_KEYS";
 const TOKEN_KEYS = "TOKEN_KEYS";

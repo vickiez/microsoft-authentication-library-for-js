@@ -202,7 +202,10 @@ describe("InteractionHandler.ts Unit Tests", () => {
             TEST_CONFIG.MSAL_CLIENT_ID,
             configObj.cache,
             cryptoOpts,
-            logger
+            logger,
+            {
+                canonicalAuthority: TEST_CONFIG.validAuthority,
+            }
         );
         authorityInstance = new Authority(
             configObj.auth.authority,

@@ -1399,7 +1399,10 @@ describe("RedirectClient", () => {
                 "different-client-id",
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             secondInstanceStorage.setInteractionInProgress(true);
             browserStorage.setInteractionInProgress(false);
@@ -1985,7 +1988,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             await redirectClient.acquireToken(emptyRequest);
             expect(
@@ -2047,7 +2053,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
 
             jest.spyOn(
@@ -2160,7 +2169,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             await redirectClient.acquireToken(emptyRequest);
             expect(
@@ -2237,7 +2249,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             await redirectClient.acquireToken(emptyRequest);
             expect(
@@ -2307,7 +2322,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             await redirectClient.acquireToken(tokenRequest);
             const cachedRequest: CommonAuthorizationCodeRequest = JSON.parse(
@@ -2350,7 +2368,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             jest.spyOn(PkceGenerator, "generatePkceCodes").mockResolvedValue({
                 challenge: TEST_CONFIG.TEST_CHALLENGE,
@@ -2403,7 +2424,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             browserStorage.setTemporaryCache(
                 PersistentCacheKeys.ADAL_ID_TOKEN,
@@ -2476,7 +2500,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             browserStorage.setTemporaryCache(
                 PersistentCacheKeys.ADAL_ID_TOKEN,
@@ -2550,7 +2577,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             browserStorage.setTemporaryCache(
                 PersistentCacheKeys.ADAL_ID_TOKEN,
@@ -2623,7 +2653,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             browserStorage.setTemporaryCache(
                 PersistentCacheKeys.ID_TOKEN,
@@ -2686,7 +2719,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             browserStorage.setTemporaryCache(
                 PersistentCacheKeys.ADAL_ID_TOKEN,
@@ -2839,7 +2875,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             await redirectClient.acquireToken(emptyRequest);
             expect(
@@ -2901,7 +2940,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             await redirectClient.acquireToken(tokenRequest);
             const cachedRequest: CommonAuthorizationCodeRequest = JSON.parse(
@@ -2944,7 +2986,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             jest.spyOn(PkceGenerator, "generatePkceCodes").mockResolvedValue({
                 challenge: TEST_CONFIG.TEST_CHALLENGE,
@@ -2998,7 +3043,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             browserStorage.setTemporaryCache(
                 PersistentCacheKeys.ADAL_ID_TOKEN,
@@ -3060,7 +3108,10 @@ describe("RedirectClient", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                testLogger
+                testLogger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             browserStorage.setTemporaryCache(
                 PersistentCacheKeys.ADAL_ID_TOKEN,

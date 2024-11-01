@@ -3,12 +3,12 @@ import {
     buildStaticAuthorityOptions,
     formatAuthorityUri,
     getTenantFromAuthorityString,
-} from "../../src/authority/Authority";
+} from "../../src/authority/Authority.js";
 import {
     INetworkModule,
     NetworkRequestOptions,
-} from "../../src/network/INetworkModule";
-import { Constants } from "../../src/utils/Constants";
+} from "../../src/network/INetworkModule.js";
+import { Constants } from "../../src/utils/Constants.js";
 import {
     TEST_URIS,
     RANDOM_TEST_GUID,
@@ -16,36 +16,33 @@ import {
     TEST_CONFIG,
     DEFAULT_TENANT_DISCOVERY_RESPONSE,
     B2C_OPENID_CONFIG_RESPONSE,
-} from "../test_kit/StringConstants";
+} from "../test_kit/StringConstants.js";
 import {
     ClientConfigurationErrorMessage,
     ClientConfigurationError,
     createClientConfigurationError,
     ClientConfigurationErrorCodes,
-} from "../../src/error/ClientConfigurationError";
-import { MockStorageClass, mockCrypto } from "../client/ClientTestUtils";
+} from "../../src/error/ClientConfigurationError.js";
+import { MockStorageClass, mockCrypto } from "../client/ClientTestUtils.js";
 import {
     ClientAuthError,
     createClientAuthError,
     ClientAuthErrorCodes,
-} from "../../src/error/ClientAuthError";
+} from "../../src/error/ClientAuthError.js";
 import {
     AuthorityOptions,
     StaticAuthorityOptions,
-} from "../../src/authority/AuthorityOptions";
-import { ProtocolMode } from "../../src/authority/ProtocolMode";
-import { AuthorityMetadataEntity } from "../../src/cache/entities/AuthorityMetadataEntity";
-import { OpenIdConfigResponse } from "../../src/authority/OpenIdConfigResponse";
-import {
-    CacheHelpers,
-    Logger,
-    LogLevel,
-    TimeUtils,
-    UrlString,
-} from "../../src";
-import { RegionDiscovery } from "../../src/authority/RegionDiscovery";
-import { InstanceDiscoveryMetadata } from "../../src/authority/AuthorityMetadata";
-import * as authorityMetadata from "../../src/authority/AuthorityMetadata";
+} from "../../src/authority/AuthorityOptions.js";
+import { ProtocolMode } from "../../src/authority/ProtocolMode.js";
+import { AuthorityMetadataEntity } from "../../src/cache/entities/AuthorityMetadataEntity.js";
+import { OpenIdConfigResponse } from "../../src/authority/OpenIdConfigResponse.js";
+import { RegionDiscovery } from "../../src/authority/RegionDiscovery.js";
+import { InstanceDiscoveryMetadata } from "../../src/authority/AuthorityMetadata.js";
+import * as authorityMetadata from "../../src/authority/AuthorityMetadata.js";
+import { Logger, LogLevel } from "../../src/logger/Logger.js";
+import * as CacheHelpers from "../../src/cache/utils/CacheHelpers.js";
+import * as TimeUtils from "../../src/utils/TimeUtils.js";
+import { UrlString } from "../../src/url/UrlString.js";
 
 let mockStorage: MockStorageClass;
 
@@ -2834,9 +2831,11 @@ describe("Authority.ts Class Unit Tests", () => {
     });
 
     describe("buildStaticAuthorityOptions", () => {
-        const fullAuthorityOptions: Partial<AuthorityOptions> = {
+        const fullAuthorityOptions: AuthorityOptions & { authority: string} = {
+            protocolMode: ProtocolMode.AAD,
             authority: TEST_CONFIG.validAuthority,
             knownAuthorities: [TEST_CONFIG.validAuthority],
+            authorityMetadata: "",
             cloudDiscoveryMetadata: TEST_CONFIG.CLOUD_DISCOVERY_METADATA,
         };
 
@@ -2852,15 +2851,6 @@ describe("Authority.ts Class Unit Tests", () => {
             const staticAuthorityOptions =
                 buildStaticAuthorityOptions(fullAuthorityOptions);
             expect(staticAuthorityOptions).toEqual(matchStaticAuthorityOptions);
-        });
-
-        it("doesn't set canonicalAuthority if authority is not provided", () => {
-            const { authority, ...partialAuthorityOptions } =
-                fullAuthorityOptions;
-            const staticAuthorityOptions = buildStaticAuthorityOptions(
-                partialAuthorityOptions
-            );
-            expect(staticAuthorityOptions.canonicalAuthority).toBeUndefined();
         });
 
         it("doesn't set knownAuthorities if knownAuthorities array is not provided", () => {
@@ -2885,7 +2875,7 @@ describe("Authority.ts Class Unit Tests", () => {
 
         it("throws if cloudDiscoveryMetadata string is not valid JSON", () => {
             const invalidCloudDiscoveryMetadata = "this-is-not-valid-json";
-            const invalidCloudDiscoveryMetadataOptions: Partial<AuthorityOptions> =
+            const invalidCloudDiscoveryMetadataOptions: AuthorityOptions & { authority: string} =
                 {
                     ...fullAuthorityOptions,
                     cloudDiscoveryMetadata: invalidCloudDiscoveryMetadata,

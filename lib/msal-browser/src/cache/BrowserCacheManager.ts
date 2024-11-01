@@ -39,6 +39,9 @@ import {
     CacheHelpers,
     StoreInCache,
     CacheError,
+    isAliasOfKnownMicrosoftAuthority,
+    UrlString,
+    CredentialEntity,
 } from "@azure/msal-common/browser";
 import { CacheOptions } from "../config/Configuration.js";
 import {
@@ -92,13 +95,32 @@ export class BrowserCacheManager extends CacheManager {
         cacheConfig: Required<CacheOptions>,
         cryptoImpl: ICrypto,
         logger: Logger,
-        staticAuthorityOptions?: StaticAuthorityOptions,
+        staticAuthorityOptions: StaticAuthorityOptions,
         performanceClient?: IPerformanceClient
     ) {
         super(clientId, cryptoImpl, logger, staticAuthorityOptions);
         this.cacheConfig = cacheConfig;
         this.logger = logger;
         this.internalStorage = new MemoryStorage();
+
+        const isAAD = isAliasOfKnownMicrosoftAuthority(
+            UrlString.getDomainFromUrl(
+                staticAuthorityOptions.canonicalAuthority
+            )
+        );
+        if (
+            isAAD &&
+            this.cacheConfig.cacheLocation === BrowserCacheLocation.LocalStorage
+        ) {
+            this.logger.warning(
+                "Overriding preferred cache location of localstorage with sessionstorage in order to honor KMSI"
+            );
+            this.cacheConfig.cacheLocation =
+                BrowserCacheLocation.SessionStorage;
+            // Remove existing items from localstorage if location was overridden
+            clearLocalStorage(clientId);
+        }
+
         this.browserStorage = this.setupBrowserStorage(
             this.cacheConfig.cacheLocation
         );
@@ -229,7 +251,8 @@ export class BrowserCacheManager extends CacheManager {
                 // Get item, parse, validate and write key to map
                 const value = this.getItem(key);
                 if (value) {
-                    const credObj = this.validateAndParseJson(value);
+                    const credObj =
+                        validateAndParseJson<CredentialEntity>(value);
                     if (credObj && credObj.hasOwnProperty("credentialType")) {
                         switch (credObj["credentialType"]) {
                             case CredentialType.ID_TOKEN:
@@ -332,7 +355,7 @@ export class BrowserCacheManager extends CacheManager {
             if (this.isAccountKey(key)) {
                 const value = this.getItem(key);
                 if (value) {
-                    const accountObj = this.validateAndParseJson(value);
+                    const accountObj = validateAndParseJson(value);
                     if (
                         accountObj &&
                         AccountEntity.isAccountEntity(accountObj)
@@ -348,27 +371,6 @@ export class BrowserCacheManager extends CacheManager {
                 }
             }
         });
-    }
-
-    /**
-     * Parses passed value as JSON object, JSON.parse() will throw an error.
-     * @param input
-     */
-    protected validateAndParseJson(jsonValue: string): object | null {
-        try {
-            const parsedJson = JSON.parse(jsonValue);
-            /**
-             * There are edge cases in which JSON.parse will successfully parse a non-valid JSON object
-             * (e.g. JSON.parse will parse an escaped string into an unescaped string), so adding a type check
-             * of the parsed value is necessary in order to be certain that the string represents a valid JSON object.
-             *
-             */
-            return parsedJson && typeof parsedJson === "object"
-                ? parsedJson
-                : null;
-        } catch (error) {
-            return null;
-        }
     }
 
     /**
@@ -416,7 +418,7 @@ export class BrowserCacheManager extends CacheManager {
             return null;
         }
 
-        const parsedAccount = this.validateAndParseJson(serializedAccount);
+        const parsedAccount = validateAndParseJson(serializedAccount);
         if (!parsedAccount || !AccountEntity.isAccountEntity(parsedAccount)) {
             this.removeAccountKeyFromMap(accountKey);
             return null;
@@ -565,7 +567,7 @@ export class BrowserCacheManager extends CacheManager {
             `${StaticCacheKeys.TOKEN_KEYS}.${this.clientId}`
         );
         if (item) {
-            const tokenKeys = this.validateAndParseJson(item);
+            const tokenKeys = validateAndParseJson(item);
             if (
                 tokenKeys &&
                 tokenKeys.hasOwnProperty("idToken") &&
@@ -727,7 +729,7 @@ export class BrowserCacheManager extends CacheManager {
             return null;
         }
 
-        const parsedIdToken = this.validateAndParseJson(value);
+        const parsedIdToken = validateAndParseJson(value);
         if (!parsedIdToken || !CacheHelpers.isIdTokenEntity(parsedIdToken)) {
             this.logger.trace(
                 "BrowserCacheManager.getIdTokenCredential: called, no cache hit"
@@ -768,7 +770,7 @@ export class BrowserCacheManager extends CacheManager {
             this.removeTokenKey(accessTokenKey, CredentialType.ACCESS_TOKEN);
             return null;
         }
-        const parsedAccessToken = this.validateAndParseJson(value);
+        const parsedAccessToken = validateAndParseJson(value);
         if (
             !parsedAccessToken ||
             !CacheHelpers.isAccessTokenEntity(parsedAccessToken)
@@ -815,7 +817,7 @@ export class BrowserCacheManager extends CacheManager {
             this.removeTokenKey(refreshTokenKey, CredentialType.REFRESH_TOKEN);
             return null;
         }
-        const parsedRefreshToken = this.validateAndParseJson(value);
+        const parsedRefreshToken = validateAndParseJson(value);
         if (
             !parsedRefreshToken ||
             !CacheHelpers.isRefreshTokenEntity(parsedRefreshToken)
@@ -861,7 +863,7 @@ export class BrowserCacheManager extends CacheManager {
             return null;
         }
 
-        const parsedMetadata = this.validateAndParseJson(value);
+        const parsedMetadata = validateAndParseJson(value);
         if (
             !parsedMetadata ||
             !CacheHelpers.isAppMetadataEntity(appMetadataKey, parsedMetadata)
@@ -900,7 +902,7 @@ export class BrowserCacheManager extends CacheManager {
             );
             return null;
         }
-        const parsedEntity = this.validateAndParseJson(value);
+        const parsedEntity = validateAndParseJson(value);
         if (
             !parsedEntity ||
             !CacheHelpers.isServerTelemetryEntity(
@@ -942,7 +944,7 @@ export class BrowserCacheManager extends CacheManager {
             );
             return null;
         }
-        const parsedMetadata = this.validateAndParseJson(value);
+        const parsedMetadata = validateAndParseJson(value);
         if (
             parsedMetadata &&
             CacheHelpers.isAuthorityMetadataEntity(key, parsedMetadata)
@@ -1038,7 +1040,7 @@ export class BrowserCacheManager extends CacheManager {
             }
             return null;
         }
-        const activeAccountValueObj = this.validateAndParseJson(
+        const activeAccountValueObj = validateAndParseJson(
             activeAccountValueFilters
         ) as AccountInfo;
         if (activeAccountValueObj) {
@@ -1105,7 +1107,7 @@ export class BrowserCacheManager extends CacheManager {
             return null;
         }
 
-        const parsedThrottlingCache = this.validateAndParseJson(value);
+        const parsedThrottlingCache = validateAndParseJson(value);
         if (
             !parsedThrottlingCache ||
             !CacheHelpers.isThrottlingEntity(
@@ -1154,29 +1156,7 @@ export class BrowserCacheManager extends CacheManager {
         }
 
         const value = this.temporaryCacheStorage.getItem(key);
-        if (!value) {
-            // If temp cache item not found in session/memory, check local storage for items set by old versions
-            if (
-                this.cacheConfig.cacheLocation ===
-                BrowserCacheLocation.LocalStorage
-            ) {
-                const item = this.browserStorage.getItem(key);
-                if (item) {
-                    this.logger.trace(
-                        "BrowserCacheManager.getTemporaryCache: Temporary cache item found in local storage"
-                    );
-                    return item;
-                }
-            }
-            this.logger.trace(
-                "BrowserCacheManager.getTemporaryCache: No cache item found in local storage"
-            );
-            return null;
-        }
-        this.logger.trace(
-            "BrowserCacheManager.getTemporaryCache: Temporary cache item returned"
-        );
-        return value;
+        return value || null;
     }
 
     /**
@@ -1397,7 +1377,7 @@ export class BrowserCacheManager extends CacheManager {
      * @param addInstanceId
      */
     generateCacheKey(key: string): string {
-        const generatedKey = this.validateAndParseJson(key);
+        const generatedKey = validateAndParseJson(key);
         if (!generatedKey) {
             if (
                 StringUtils.startsWith(key, Constants.CACHE_PREFIX) ||
@@ -1687,7 +1667,7 @@ export class BrowserCacheManager extends CacheManager {
             return null;
         }
 
-        const parsedRequest = this.validateAndParseJson(
+        const parsedRequest = validateAndParseJson(
             cachedRequest
         ) as NativeTokenRequest;
         if (!parsedRequest) {
@@ -1916,6 +1896,58 @@ export class BrowserCacheManager extends CacheManager {
     }
 }
 
+/**
+ * Parses passed value as JSON object, JSON.parse() will throw an error.
+ * @param input
+ */
+function validateAndParseJson<T>(jsonValue: string): T | null {
+    try {
+        const parsedJson = JSON.parse(jsonValue);
+        /**
+         * There are edge cases in which JSON.parse will successfully parse a non-valid JSON object
+         * (e.g. JSON.parse will parse an escaped string into an unescaped string), so adding a type check
+         * of the parsed value is necessary in order to be certain that the string represents a valid JSON object.
+         *
+         */
+        return parsedJson && typeof parsedJson === "object"
+            ? (parsedJson as T)
+            : null;
+    } catch (error) {
+        return null;
+    }
+}
+
+/**
+ * Clears localStorage when MSAL overrides location to sessionStorage
+ * @deprecated This is a short term need and can be removed in the future
+ */
+function clearLocalStorage(clientId: string): void {
+    try {
+        const localStorage = new BrowserStorage(
+            BrowserCacheLocation.LocalStorage
+        );
+        const accountKeys = localStorage.getItem(StaticCacheKeys.ACCOUNT_KEYS);
+        if (accountKeys) {
+            const keys = validateAndParseJson<Array<string>>(accountKeys);
+            keys?.forEach((key) => localStorage.removeItem(key));
+        }
+
+        const tokenKeys = localStorage.getItem(
+            `${StaticCacheKeys.TOKEN_KEYS}.${clientId}`
+        );
+        if (tokenKeys) {
+            const keys = validateAndParseJson<TokenKeys>(tokenKeys);
+            if (!keys) {
+                return;
+            }
+
+            keys.accessToken.forEach((key) => localStorage.removeItem(key));
+            keys.idToken.forEach((key) => localStorage.removeItem(key));
+            keys.refreshToken.forEach((key) => localStorage.removeItem(key));
+        }
+    } catch (e) {}
+}
+
 export const DEFAULT_BROWSER_CACHE_MANAGER = (
     clientId: string,
     logger: Logger
@@ -1932,6 +1964,9 @@ export const DEFAULT_BROWSER_CACHE_MANAGER = (
         clientId,
         cacheOptions,
         DEFAULT_CRYPTO_IMPLEMENTATION,
-        logger
+        logger,
+        {
+            canonicalAuthority: Constants.DEFAULT_AUTHORITY,
+        }
     );
 };

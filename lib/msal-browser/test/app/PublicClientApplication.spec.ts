@@ -1580,7 +1580,10 @@ describe("PublicClientApplication.ts Class Unit Tests", () => {
                 "client-id",
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             browserStorage.setInteractionInProgress(true);
             await expect(
@@ -1599,13 +1602,19 @@ describe("PublicClientApplication.ts Class Unit Tests", () => {
                 "client-id",
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             const secondInstanceStorage = new BrowserCacheManager(
                 "different-client-id",
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             secondInstanceStorage.setInteractionInProgress(true);
 
@@ -2501,7 +2510,10 @@ describe("PublicClientApplication.ts Class Unit Tests", () => {
                 "client-id",
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             browserStorage.setInteractionInProgress(true);
 
@@ -5853,7 +5865,10 @@ describe("PublicClientApplication.ts Class Unit Tests", () => {
                 "client-id",
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             browserStorage.setInteractionInProgress(true);
 

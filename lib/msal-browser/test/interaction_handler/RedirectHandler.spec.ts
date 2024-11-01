@@ -115,7 +115,10 @@ describe("RedirectHandler.ts Unit Tests", () => {
             TEST_CONFIG.MSAL_CLIENT_ID,
             configObj.cache,
             browserCrypto,
-            logger
+            logger,
+            {
+                canonicalAuthority: TEST_CONFIG.validAuthority,
+            }
         );
         // Initialize authority after browser storage for proper use
         authorityInstance = new Authority(

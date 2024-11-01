@@ -379,7 +379,7 @@ export class Authority {
             this.canonicalAuthority.endsWith("v2.0/") ||
             this.authorityType === AuthorityType.Adfs ||
             (this.protocolMode !== ProtocolMode.AAD &&
-                !this.isAliasOfKnownMicrosoftAuthority(canonicalAuthorityHost))
+                !isAliasOfKnownMicrosoftAuthority(canonicalAuthorityHost))
         ) {
             return `${this.canonicalAuthority}.well-known/openid-configuration`;
         }
@@ -1189,14 +1189,6 @@ export class Authority {
     }
 
     /**
-     * Returns whether or not the provided host is an alias of a known Microsoft authority for purposes of endpoint discovery
-     * @param host
-     */
-    isAliasOfKnownMicrosoftAuthority(host: string): boolean {
-        return InstanceDiscoveryMetadataAliases.has(host);
-    }
-
-    /**
      * Checks whether the provided host is that of a public cloud authority
      *
      * @param authority string
@@ -1306,6 +1298,14 @@ export class Authority {
 }
 
 /**
+ * Returns whether or not the provided host is an alias of a known Microsoft authority for purposes of endpoint discovery
+ * @param host
+ */
+export function isAliasOfKnownMicrosoftAuthority(host: string): boolean {
+    return InstanceDiscoveryMetadataAliases.has(host);
+}
+
+/**
  * Extract tenantId from authority
  */
 export function getTenantFromAuthorityString(
@@ -1341,7 +1341,7 @@ export function formatAuthorityUri(authorityUri: string): string {
 }
 
 export function buildStaticAuthorityOptions(
-    authOptions: Partial<AuthorityOptions>
+    authOptions: Partial<AuthorityOptions> & { authority: string }
 ): StaticAuthorityOptions {
     const rawCloudDiscoveryMetadata = authOptions.cloudDiscoveryMetadata;
     let cloudDiscoveryMetadata: CloudInstanceDiscoveryResponse | undefined =
@@ -1356,9 +1356,7 @@ export function buildStaticAuthorityOptions(
         }
     }
     return {
-        canonicalAuthority: authOptions.authority
-            ? formatAuthorityUri(authOptions.authority)
-            : undefined,
+        canonicalAuthority: formatAuthorityUri(authOptions.authority),
         knownAuthorities: authOptions.knownAuthorities,
         cloudDiscoveryMetadata: cloudDiscoveryMetadata,
     };

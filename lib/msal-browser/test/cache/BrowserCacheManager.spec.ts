@@ -89,7 +89,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             cacheManager.setItem("key", "value");
             expect(window.localStorage.getItem("key")).toBeNull();
@@ -105,7 +108,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             sessionCache.setItem("key", "value");
             expect(sessionCache.getItem("key")).toBe("value");
@@ -118,7 +124,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             localCache.setItem("key", "value");
             expect(localCache.getItem("key")).toBe("value");
@@ -129,7 +138,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             expect(browserStorage.setItem).not.toBeNull();
             expect(browserStorage.getItem).not.toBeNull();
@@ -161,7 +173,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 migrationCacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             expect(window.sessionStorage.getItem(idTokenKey)).toBe(
                 TEST_TOKENS.IDTOKEN_V2
@@ -225,15 +240,15 @@ describe("BrowserCacheManager tests", () => {
                 TEST_TOKENS.REFRESH_TOKEN,
                 TEST_CONFIG.MSAL_CLIENT_ID
             );
-            window.localStorage.setItem(
+            window.sessionStorage.setItem(
                 CacheHelpers.generateCredentialKey(testIdToken),
                 JSON.stringify(testIdToken)
             );
-            window.localStorage.setItem(
+            window.sessionStorage.setItem(
                 CacheHelpers.generateCredentialKey(testAccessToken),
                 JSON.stringify(testAccessToken)
             );
-            window.localStorage.setItem(
+            window.sessionStorage.setItem(
                 CacheHelpers.generateCredentialKey(testRefreshToken),
                 JSON.stringify(testRefreshToken)
             );
@@ -242,15 +257,18 @@ describe("BrowserCacheManager tests", () => {
             const initialStorage = new BrowserCacheManager(
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 {
-                    cacheLocation: BrowserCacheLocation.LocalStorage,
-                    temporaryCacheLocation: BrowserCacheLocation.LocalStorage,
+                    cacheLocation: BrowserCacheLocation.SessionStorage,
+                    temporaryCacheLocation: BrowserCacheLocation.SessionStorage,
                     storeAuthStateInCookie: false,
                     secureCookies: false,
                     cacheMigrationEnabled: false,
                     claimsBasedCachingEnabled: false,
                 },
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             expect(initialStorage.getTokenKeys().idToken.length).toBe(0);
             expect(initialStorage.getTokenKeys().accessToken.length).toBe(0);
@@ -260,15 +278,18 @@ describe("BrowserCacheManager tests", () => {
             const migrationStorage = new BrowserCacheManager(
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 {
-                    cacheLocation: BrowserCacheLocation.LocalStorage,
-                    temporaryCacheLocation: BrowserCacheLocation.LocalStorage,
+                    cacheLocation: BrowserCacheLocation.SessionStorage,
+                    temporaryCacheLocation: BrowserCacheLocation.SessionStorage,
                     storeAuthStateInCookie: false,
                     secureCookies: false,
                     cacheMigrationEnabled: true,
                     claimsBasedCachingEnabled: false,
                 },
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             expect(migrationStorage.getTokenKeys().idToken.length).toBe(1);
             expect(migrationStorage.getTokenKeys().accessToken.length).toBe(1);
@@ -326,7 +347,10 @@ describe("BrowserCacheManager tests", () => {
                     claimsBasedCachingEnabled: false,
                 },
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             expect(migrationStorage.getTokenKeys().idToken.length).toBe(0);
             expect(migrationStorage.getTokenKeys().accessToken.length).toBe(0);
@@ -338,7 +362,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             const authority = new Authority(
                 TEST_CONFIG.validAuthority,
@@ -366,7 +393,7 @@ describe("BrowserCacheManager tests", () => {
                 },
                 authority
             );
-            window.localStorage.setItem(
+            window.sessionStorage.setItem(
                 testAccount.generateAccountKey(),
                 JSON.stringify(testAccount)
             );
@@ -375,15 +402,18 @@ describe("BrowserCacheManager tests", () => {
             const initialStorage = new BrowserCacheManager(
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 {
-                    cacheLocation: BrowserCacheLocation.LocalStorage,
-                    temporaryCacheLocation: BrowserCacheLocation.LocalStorage,
+                    cacheLocation: BrowserCacheLocation.SessionStorage,
+                    temporaryCacheLocation: BrowserCacheLocation.SessionStorage,
                     storeAuthStateInCookie: false,
                     secureCookies: false,
                     cacheMigrationEnabled: false,
                     claimsBasedCachingEnabled: false,
                 },
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             expect(initialStorage.getAccountKeys().length).toBe(0);
 
@@ -391,15 +421,18 @@ describe("BrowserCacheManager tests", () => {
             const migrationStorage = new BrowserCacheManager(
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 {
-                    cacheLocation: BrowserCacheLocation.LocalStorage,
-                    temporaryCacheLocation: BrowserCacheLocation.LocalStorage,
+                    cacheLocation: BrowserCacheLocation.SessionStorage,
+                    temporaryCacheLocation: BrowserCacheLocation.SessionStorage,
                     storeAuthStateInCookie: false,
                     secureCookies: false,
                     cacheMigrationEnabled: true,
                     claimsBasedCachingEnabled: false,
                 },
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             expect(migrationStorage.getAccountKeys().length).toBe(1);
         });
@@ -417,7 +450,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             authority = new Authority(
                 TEST_CONFIG.validAuthority,
@@ -441,7 +477,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: "https://contoso.com/common", // Set to non AAD authority to force it to use localstorage
+                }
             );
             cacheVal = "cacheVal";
             msalCacheKey = browserSessionStorage.generateCacheKey("cacheKey");
@@ -458,22 +497,6 @@ describe("BrowserCacheManager tests", () => {
             browserLocalStorage.setTemporaryCache("cacheKey2", cacheVal, true);
             expect(window.sessionStorage.getItem(msalCacheKey)).toBe(cacheVal);
             expect(window.sessionStorage.getItem(msalCacheKey2)).toBe(cacheVal);
-        });
-
-        it("getTemporaryCache falls back to local storage if not found in session/memory storage", () => {
-            const testTempItemKey = "test-temp-item-key";
-            const testTempItemValue = "test-temp-item-value";
-            window.localStorage.setItem(testTempItemKey, testTempItemValue);
-            cacheConfig.cacheLocation = BrowserCacheLocation.LocalStorage;
-            browserLocalStorage = new BrowserCacheManager(
-                TEST_CONFIG.MSAL_CLIENT_ID,
-                cacheConfig,
-                browserCrypto,
-                logger
-            );
-            expect(browserLocalStorage.getTemporaryCache(testTempItemKey)).toBe(
-                testTempItemValue
-            );
         });
 
         it("setItem", () => {
@@ -1607,7 +1630,9 @@ describe("BrowserCacheManager tests", () => {
                         cacheConfig,
                         browserCrypto,
                         logger,
-                        undefined,
+                        {
+                            canonicalAuthority: TEST_CONFIG.validAuthority,
+                        },
                         perfClient
                     );
                     cacheManager.setAccessTokenCredential(testAccessToken);
@@ -1672,7 +1697,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             authority = new Authority(
                 TEST_CONFIG.validAuthority,
@@ -1698,7 +1726,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             cacheVal = "cacheVal";
             msalCacheKey = browserSessionStorage.generateCacheKey("cacheKey");
@@ -1721,23 +1752,16 @@ describe("BrowserCacheManager tests", () => {
             const testTempItemKey = "test-temp-item-key";
             const testTempItemValue = "test-temp-item-value";
             window.localStorage.setItem(testTempItemKey, testTempItemValue);
-            cacheConfig.cacheLocation = BrowserCacheLocation.LocalStorage;
-            browserLocalStorage = new BrowserCacheManager(
-                TEST_CONFIG.MSAL_CLIENT_ID,
-                cacheConfig,
-                browserCrypto,
-                logger
-            );
             expect(browserLocalStorage.getTemporaryCache(testTempItemKey)).toBe(
                 testTempItemValue
             );
         });
 
-        it("removeItem()", () => {
+        it("removeTemporaryItem()", () => {
             browserSessionStorage.setTemporaryCache("cacheKey", cacheVal, true);
             browserLocalStorage.setTemporaryCache("cacheKey", cacheVal, true);
-            browserSessionStorage.removeItem(msalCacheKey);
-            browserLocalStorage.removeItem(msalCacheKey);
+            browserSessionStorage.removeTemporaryItem(msalCacheKey);
+            browserLocalStorage.removeTemporaryItem(msalCacheKey);
             expect(window.sessionStorage.getItem(msalCacheKey)).toBeNull();
             expect(window.localStorage.getItem(msalCacheKey)).toBeNull();
             expect(
@@ -2546,21 +2570,30 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             cacheConfig.cacheLocation = BrowserCacheLocation.LocalStorage;
             browserLocalStorage = new BrowserCacheManager(
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             cacheConfig.cacheLocation = BrowserCacheLocation.MemoryStorage;
             browserMemoryStorage = new BrowserCacheManager(
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             cacheVal = "cacheVal";
             msalCacheKey = browserSessionStorage.generateCacheKey("cacheKey");
@@ -2778,14 +2811,20 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             cacheConfig.cacheLocation = BrowserCacheLocation.LocalStorage;
             browserLocalStorage = new BrowserCacheManager(
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             cacheVal = "cacheVal";
             msalCacheKey = browserSessionStorage.generateCacheKey("cacheKey");
@@ -2862,7 +2901,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             const authorityKey = browserStorage.generateAuthorityKey(
                 TEST_STATE_VALUES.TEST_STATE_REDIRECT
@@ -2877,7 +2919,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             const nonceKey = browserStorage.generateNonceKey(
                 TEST_STATE_VALUES.TEST_STATE_REDIRECT
@@ -2892,7 +2937,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             const testNonce = "testNonce";
             const stateString = TEST_STATE_VALUES.TEST_STATE_REDIRECT;
@@ -2924,7 +2972,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             browserStorage.updateCacheEntries(
                 stateString,
@@ -2978,7 +3029,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             const tokenRequest: AuthorizationCodeRequest = {
                 redirectUri: `${TEST_URIS.DEFAULT_INSTANCE}`,
@@ -3008,7 +3062,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             // browserStorage.setItem(TemporaryCacheKeys.REQUEST_PARAMS, cryptoObj.base64Encode(JSON.stringify(tokenRequest)));
 
@@ -3030,7 +3087,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             const tokenRequest: AuthorizationCodeRequest = {
                 redirectUri: `${TEST_URIS.DEFAULT_INSTANCE}`,
@@ -3065,7 +3125,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
             // Set up cache
             const authorityKey = browserStorage.generateAuthorityKey(
@@ -3110,7 +3173,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
 
             const cacheKey = "cacheKey";
@@ -3136,7 +3202,10 @@ describe("BrowserCacheManager tests", () => {
                 TEST_CONFIG.MSAL_CLIENT_ID,
                 cacheConfig,
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
 
             const browserState: BrowserStateObject = {
@@ -3178,7 +3247,10 @@ describe("BrowserCacheManager tests", () => {
                     storeAuthStateInCookie: true,
                 },
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
 
             browserStorage.setInteractionInProgress(true);
@@ -3195,7 +3267,10 @@ describe("BrowserCacheManager tests", () => {
                     ...cacheConfig,
                 },
                 browserCrypto,
-                logger
+                logger,
+                {
+                    canonicalAuthority: TEST_CONFIG.validAuthority,
+                }
             );
 
             expect(browserStorage.getTokenKeys()).toStrictEqual({
