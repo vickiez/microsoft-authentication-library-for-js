@@ -17,7 +17,6 @@ import {
   IPublicClientApplication,
   PublicClientApplication,
   InteractionType,
-  BrowserCacheLocation,
   LogLevel,
 } from '@azure/msal-browser';
 import {
@@ -48,9 +47,6 @@ export function MSALInstanceFactory(): IPublicClientApplication {
       authority: environment.msalConfig.auth.authority,
       redirectUri: '/',
       postLogoutRedirectUri: '/',
-    },
-    cache: {
-      cacheLocation: BrowserCacheLocation.LocalStorage,
     },
     system: {
       allowNativeBroker: false, // Disables WAM Broker

@@ -4,7 +4,7 @@ import { routes } from './app.routes';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS, withFetch } from '@angular/common/http';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
+import { IPublicClientApplication, PublicClientApplication, InteractionType, LogLevel } from '@azure/msal-browser';
 import { MsalInterceptor, MSAL_INSTANCE, MsalInterceptorConfiguration, MsalGuardConfiguration, MSAL_GUARD_CONFIG, MSAL_INTERCEPTOR_CONFIG, MsalService, MsalGuard, MsalBroadcastService } from '@azure/msal-angular';
 import { environment } from '../environments/environment';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,9 +23,6 @@ export function MSALInstanceFactory(): IPublicClientApplication {
       authority: environment.msalConfig.auth.authority,
       redirectUri: '/',
       postLogoutRedirectUri: '/'
-    },
-    cache: {
-      cacheLocation: BrowserCacheLocation.LocalStorage
     },
     system: {
       allowNativeBroker: false, // Disables WAM Broker

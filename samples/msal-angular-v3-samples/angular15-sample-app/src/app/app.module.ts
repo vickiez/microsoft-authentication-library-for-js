@@ -13,7 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
+import { IPublicClientApplication, PublicClientApplication, InteractionType, LogLevel } from '@azure/msal-browser';
 import { MsalGuard, MsalInterceptor, MsalBroadcastService, MsalInterceptorConfiguration, MsalModule, MsalService, MSAL_GUARD_CONFIG, MSAL_INSTANCE, MSAL_INTERCEPTOR_CONFIG, MsalGuardConfiguration, MsalRedirectComponent } from '@azure/msal-angular';
 import { FailedComponent } from './failed/failed.component';
 import { environment } from 'src/environments/environment';
@@ -29,9 +29,6 @@ export function MSALInstanceFactory(): IPublicClientApplication {
       authority: environment.msalConfig.auth.authority,
       redirectUri: '/',
       postLogoutRedirectUri: '/'
-    },
-    cache: {
-      cacheLocation: BrowserCacheLocation.LocalStorage
     },
     system: {
       allowNativeBroker: false, // Disables WAM Broker

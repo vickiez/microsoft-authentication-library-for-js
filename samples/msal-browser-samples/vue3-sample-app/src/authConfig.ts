@@ -8,9 +8,6 @@ export const msalConfig = {
     redirectUri: '/', // Must be registered as a SPA redirectURI on your app registration
     postLogoutRedirectUri: '/' // Must be registered as a SPA redirectURI on your app registration
   },
-  cache: {
-    cacheLocation: 'localStorage'
-  },
   system: {
       loggerOptions: {
           loggerCallback: (level: LogLevel, message: string, containsPii: boolean) => {

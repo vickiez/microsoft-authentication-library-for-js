@@ -208,7 +208,7 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { MsalModule, MsalService, MsalGuard, MsalInterceptor, MsalBroadcastService, MsalRedirectComponent, MSAL_BROADCAST_CONFIG } from "@azure/msal-angular"; // Import MsalBroadcastService and MSAL_BROADCAST_CONFIG here
-import { PublicClientApplication, InteractionType, BrowserCacheLocation } from "@azure/msal-browser";
+import { PublicClientApplication, InteractionType } from "@azure/msal-browser";
 
 @NgModule({
     imports: [
@@ -219,10 +219,6 @@ import { PublicClientApplication, InteractionType, BrowserCacheLocation } from "
                 redirectUri: "http://localhost:4200/",
                 postLogoutRedirectUri: "http://localhost:4200/",
                 navigateToLoginRequestUrl: true
-            },
-            cache: {
-                cacheLocation : BrowserCacheLocation.LocalStorage,
-                storeAuthStateInCookie: true, // set to true for IE 11
             },
             system: {
                 loggerOptions: {

@@ -19,7 +19,7 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { MsalModule, MsalService, MsalGuard, MsalInterceptor, MsalBroadcastService, MsalRedirectComponent } from "@azure/msal-angular";
-import { PublicClientApplication, InteractionType, BrowserCacheLocation } from "@azure/msal-browser";
+import { PublicClientApplication, InteractionType } from "@azure/msal-browser";
 
 @NgModule({
     imports: [
@@ -28,10 +28,6 @@ import { PublicClientApplication, InteractionType, BrowserCacheLocation } from "
                 clientId: "Your client ID",
                 authority: "Your authority",
                 redirectUri: "Your redirect Uri",
-            },
-            cache: {
-                cacheLocation : BrowserCacheLocation.LocalStorage,
-                storeAuthStateInCookie: true, // set to true for IE 11
             },
             system: {
                 loggerOptions: {
@@ -103,7 +99,7 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { MsalModule, MsalService, MsalGuard, MsalInterceptor, MsalBroadcastService, MsalRedirectComponent } from "@azure/msal-angular";
-import { PublicClientApplication, InteractionType, BrowserCacheLocation } from "@azure/msal-browser";
+import { PublicClientApplication, InteractionType } from "@azure/msal-browser";
 
 @NgModule({
     imports: [
@@ -112,10 +108,6 @@ import { PublicClientApplication, InteractionType, BrowserCacheLocation } from "
                 clientId: "Your client ID",
                 authority: "Your authority",
                 redirectUri: "Your redirect Uri",
-            },
-            cache: {
-                cacheLocation : BrowserCacheLocation.LocalStorage,
-                storeAuthStateInCookie: true, // set to true for IE 11
             },
             system: {
                 loggerOptions: {

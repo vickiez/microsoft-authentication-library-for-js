@@ -62,9 +62,6 @@ const msalConfig = {
     redirectUri: '/', // Must be registered as a SPA redirectURI on your app registration
     postLogoutRedirectUri: '/' // Must be registered as a SPA redirectURI on your app registrationregistration
   },
-  cache: {
-    cacheLocation: 'localStorage' // Options are localStorage, sessionStorage, memoryStorage
-  },
 };
 
 export const msalInstance = new PublicClientApplication(msalConfig);

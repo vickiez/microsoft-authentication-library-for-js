@@ -13,9 +13,6 @@ const msalInstance = new msal.PublicClientApplication({
         redirectUri,
         postLogoutRedirectUri: redirectUri
     },
-    cache: {
-        cacheLocation: "localStorage"
-    }
 });
 
 // Set currently logged in account

@@ -42,9 +42,6 @@ const myMSALObj = new msal.PublicClientApplication({
         authority: "https://login.microsoftonline.com/ENTER_TENANT_ID",
         redirectUri: "/redirect", // set to a blank page for handling auth code response via popups
     },
-    cache: {
-        cacheLocation: "localStorage", // set your cache location to local storage
-    },
 });
 
 window.onload = () => {
@@ -73,9 +70,6 @@ const myMSALObj = new msal.PublicClientApplication({
         clientId: "ENTER_CLIENT_ID",
         authority: "https://login.microsoftonline.com/ENTER_TENANT_ID",
         redirectUri: "/redirect", // set to a blank page for handling auth code response via popups
-    },
-    cache: {
-        cacheLocation: "localStorage", // set your cache location to local storage
     },
 });
 

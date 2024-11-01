@@ -41,7 +41,7 @@ import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { MsalModule, MsalService, MsalGuard, MsalInterceptor, MsalBroadcastService, MsalRedirectComponent } from "@azure/msal-angular";
-import { PublicClientApplication, InteractionType, BrowserCacheLocation } from "@azure/msal-browser";
+import { PublicClientApplication, InteractionType } from "@azure/msal-browser";
 
 @NgModule({
     imports: [
@@ -52,10 +52,6 @@ import { PublicClientApplication, InteractionType, BrowserCacheLocation } from "
                 redirectUri: "http://localhost:4200/",
                 postLogoutRedirectUri: "http://localhost:4200/",
                 navigateToLoginRequestUrl: true
-            },
-            cache: {
-                cacheLocation : BrowserCacheLocation.LocalStorage,
-                storeAuthStateInCookie: true, // set to true for IE 11
             },
             system: {
                 loggerOptions: {
@@ -102,7 +98,7 @@ import {
   MsalBroadcastService, 
   MsalRedirectComponent
 } from "@azure/msal-angular";
-import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation } from "@azure/msal-browser";
+import { IPublicClientApplication, PublicClientApplication, InteractionType } from "@azure/msal-browser";
 
 export function MSALInstanceFactory(): IPublicClientApplication {
   return new PublicClientApplication({
@@ -110,9 +106,6 @@ export function MSALInstanceFactory(): IPublicClientApplication {
       clientId: "b5c2e510-4a17-4feb-b219-e55aa5b74144",
       redirectUri: "http://localhost:4200",
       postLogoutRedirectUri: "http://localhost:4200"
-    },
-    cache: {
-      cacheLocation: BrowserCacheLocation.LocalStorage
     },
   });
 }
@@ -258,10 +251,6 @@ fetch('/assets/configuration.json')
       "postLogoutRedirectUri": "http://localhost:4200/",
       "navigateToLoginRequestUrl": true
     },
-    "cache": {
-      "cacheLocation": "localStorage",
-      "storeAuthStateInCookie": true
-    }
   },
   "guard": {
     "interactionType": "redirect",
@@ -481,10 +470,6 @@ export class AppModule { }
       "postLogoutRedirectUri": "http://localhost:4200/",
       "navigateToLoginRequestUrl": true
     },
-    "cache": {
-      "cacheLocation": "localStorage",
-      "storeAuthStateInCookie": true
-    }
   },
   "guard": {
     "interactionType": "redirect",
@@ -536,7 +521,7 @@ import { routes } from './app.routes';
 import { BrowserModule } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS, withFetch, withInterceptors } from '@angular/common/http';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
+import { IPublicClientApplication, PublicClientApplication, InteractionType, LogLevel } from '@azure/msal-browser';
 import { MsalInterceptor, MSAL_INSTANCE, MsalInterceptorConfiguration, MsalGuardConfiguration, MSAL_GUARD_CONFIG, MSAL_INTERCEPTOR_CONFIG, MsalService, MsalGuard, MsalBroadcastService } from '@azure/msal-angular';
 
 export function loggerCallback(logLevel: LogLevel, message: string) {
@@ -550,9 +535,6 @@ export function MSALInstanceFactory(): IPublicClientApplication {
       authority: "https://login.microsoftonline.com/common/",
       redirectUri: '/',
       postLogoutRedirectUri: '/'
-    },
-    cache: {
-      cacheLocation: BrowserCacheLocation.LocalStorage
     },
     system: {
       allowNativeBroker: false, // Disables WAM Broker

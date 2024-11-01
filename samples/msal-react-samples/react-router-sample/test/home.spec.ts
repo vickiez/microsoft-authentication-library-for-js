@@ -70,7 +70,7 @@ describe("/ (Home Page)", () => {
         context = await browser.createIncognitoBrowserContext();
         page = await context.newPage();
         page.setDefaultTimeout(5000);
-        BrowserCache = new BrowserCacheUtils(page, "localStorage");
+        BrowserCache = new BrowserCacheUtils(page, "sessionStorage");
         await page.goto(`http://localhost:${port}`);
     });
 
