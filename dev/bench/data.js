@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1730333932245,
+  "lastUpdate": 1730753736284,
   "repoUrl": "https://github.com/AzureAD/microsoft-authentication-library-for-js",
   "entries": {
     "msal-node client-credential Regression Test": [
@@ -13256,6 +13256,44 @@ window.BENCHMARK_DATA = {
             "range": "±2.15%",
             "unit": "ops/sec",
             "extra": "222 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "87724641+Robbie-Microsoft@users.noreply.github.com",
+            "name": "Robbie-Microsoft",
+            "username": "Robbie-Microsoft"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "dbc00404c7b0b4c2aab885b1606428d4ffd3f276",
+          "message": "Added E2E Test: Client Credentials with Certificate from Key Vault (#7367)\n\nThis PR adds a sample with a corresponding e2e test.\r\n\r\nA follow up PR that converts the sample to TypeScript is located\r\n[here](https://github.com/AzureAD/microsoft-authentication-library-for-js/pull/7368).\r\n\r\nAdditionally, some potential follow up work would be to re-use some of\r\nthe certificate transforming functionality introduced here and change\r\nthe way developers pass in certificates.\r\n\r\n---------\r\n\r\nCo-authored-by: Hector Morales <hemoral@microsoft.com>",
+          "timestamp": "2024-11-04T15:50:17-05:00",
+          "tree_id": "3d18fb95af94560c8fe4062d95ae32c5b7c717a4",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/commit/dbc00404c7b0b4c2aab885b1606428d4ffd3f276"
+        },
+        "date": 1730753734447,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsFirstItemInTheCache",
+            "value": 212477,
+            "range": "±1.65%",
+            "unit": "ops/sec",
+            "extra": "211 samples"
+          },
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsLastItemInTheCache",
+            "value": 185182,
+            "range": "±1.94%",
+            "unit": "ops/sec",
+            "extra": "223 samples"
           }
         ]
       }
