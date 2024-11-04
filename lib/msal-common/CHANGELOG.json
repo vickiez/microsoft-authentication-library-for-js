@@ -2,6 +2,71 @@
   "name": "@azure/msal-common",
   "entries": [
     {
+      "date": "Mon, 04 Nov 2024 23:15:20 GMT",
+      "version": "14.16.0",
+      "tag": "@azure/msal-common_v14.16.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "thomas.norling@microsoft.com",
+            "package": "@azure/msal-common",
+            "commit": "dbc00404c7b0b4c2aab885b1606428d4ffd3f276",
+            "comment": "Remove NetworkManager class"
+          },
+          {
+            "author": "kshabelko@microsoft.com",
+            "package": "@azure/msal-common",
+            "commit": "dbc00404c7b0b4c2aab885b1606428d4ffd3f276",
+            "comment": "Add first order broker parameters #7348"
+          },
+          {
+            "author": "shylasummers@microsoft.com",
+            "package": "@azure/msal-common",
+            "commit": "dbc00404c7b0b4c2aab885b1606428d4ffd3f276",
+            "comment": "Make clear synchronous for msal.node"
+          },
+          {
+            "author": "thomas.norling@microsoft.com",
+            "package": "@azure/msal-common",
+            "commit": "dbc00404c7b0b4c2aab885b1606428d4ffd3f276",
+            "comment": "Additional network failure telemetry"
+          },
+          {
+            "author": "thomas.norling@microsoft.com",
+            "package": "@azure/msal-common",
+            "commit": "dbc00404c7b0b4c2aab885b1606428d4ffd3f276",
+            "comment": "Validate crypto.subtle is available during initialization"
+          },
+          {
+            "author": "beachball",
+            "package": "@azure/msal-common",
+            "comment": "Bump eslint-config-msal to v0.0.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@azure/msal-common",
+            "comment": "Bump msal-test-utils to v0.0.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@azure/msal-common",
+            "comment": "Bump rollup-msal to v0.0.0",
+            "commit": "not available"
+          }
+        ],
+        "patch": [
+          {
+            "author": "thomas.norling@microsoft.com",
+            "package": "@azure/msal-common",
+            "commit": "dbc00404c7b0b4c2aab885b1606428d4ffd3f276",
+            "comment": "Move correlationId to query string on /token calls"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 03 Oct 2024 00:40:42 GMT",
       "version": "14.15.0",
       "tag": "@azure/msal-common_v14.15.0",

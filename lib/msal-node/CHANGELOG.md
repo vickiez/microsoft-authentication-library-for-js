@@ -1,8 +1,22 @@
 # Change Log - @azure/msal-node
 
-This log was last generated on Thu, 03 Oct 2024 00:40:42 GMT and should not be manually modified.
+This log was last generated on Mon, 04 Nov 2024 23:15:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.16.0
+
+Mon, 04 Nov 2024 23:15:21 GMT
+
+### Minor changes
+
+- Make clear synchronous (shylasummers@microsoft.com)
+- Remove NetworkManager class (thomas.norling@microsoft.com)
+- Region auto enable on env variable #7354 (rginsburg@microsoft.com)
+- Add first order broker parameters #7348 (kshabelko@microsoft.com)
+- Bump @azure/msal-common to v14.16.0
+- Bump eslint-config-msal to v0.0.0
+- Bump rollup-msal to v0.0.0
 
 ## 2.15.0
 

@@ -2,6 +2,65 @@
   "name": "@azure/msal-node",
   "entries": [
     {
+      "date": "Mon, 04 Nov 2024 23:15:21 GMT",
+      "version": "2.16.0",
+      "tag": "@azure/msal-node_v2.16.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "shylasummers@microsoft.com",
+            "package": "@azure/msal-node",
+            "commit": "dbc00404c7b0b4c2aab885b1606428d4ffd3f276",
+            "comment": "Make clear synchronous"
+          },
+          {
+            "author": "thomas.norling@microsoft.com",
+            "package": "@azure/msal-node",
+            "commit": "dbc00404c7b0b4c2aab885b1606428d4ffd3f276",
+            "comment": "Remove NetworkManager class"
+          },
+          {
+            "author": "rginsburg@microsoft.com",
+            "package": "@azure/msal-node",
+            "commit": "dbc00404c7b0b4c2aab885b1606428d4ffd3f276",
+            "comment": "Region auto enable on env variable #7354"
+          },
+          {
+            "author": "kshabelko@microsoft.com",
+            "package": "@azure/msal-node",
+            "commit": "dbc00404c7b0b4c2aab885b1606428d4ffd3f276",
+            "comment": "Add first order broker parameters #7348"
+          },
+          {
+            "author": "beachball",
+            "package": "@azure/msal-node",
+            "comment": "Bump @azure/msal-common to v14.16.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@azure/msal-node",
+            "comment": "Bump eslint-config-msal to v0.0.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@azure/msal-node",
+            "comment": "Bump rollup-msal to v0.0.0",
+            "commit": "not available"
+          }
+        ],
+        "none": [
+          {
+            "author": "rginsburg@microsoft.com",
+            "package": "@azure/msal-node",
+            "commit": "dbc00404c7b0b4c2aab885b1606428d4ffd3f276",
+            "comment": "Removed warnings from msal-node-api.md #7376"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Oct 2024 16:51:05 GMT",
       "version": "2.15.0",
       "tag": "@azure/msal-node_v2.15.0",
