@@ -56,7 +56,6 @@ describe("Client Credentials AAD Prod Tests", () => {
 
     describe("Acquire Token", () => {
         let confidentialClientApplication: ConfidentialClientApplication;
-        let server: any;
 
         beforeAll(async () => {
             await NodeCacheTestUtils.resetCache(TEST_CACHE_LOCATION);
@@ -66,15 +65,11 @@ describe("Client Credentials AAD Prod Tests", () => {
             await NodeCacheTestUtils.resetCache(TEST_CACHE_LOCATION);
         });
 
-        afterAll(async () => {
-            if (server) await server.close();
-        });
-
         it("Performs acquire token", async () => {
             confidentialClientApplication = new ConfidentialClientApplication(
                 config
             );
-            server = await getClientCredentialsToken(
+            await getClientCredentialsToken(
                 confidentialClientApplication,
                 clientCredentialRequestScopes
             );
@@ -88,7 +83,7 @@ describe("Client Credentials AAD Prod Tests", () => {
             confidentialClientApplication = new ConfidentialClientApplication(
                 config
             );
-            server = await getClientCredentialsToken(
+            await getClientCredentialsToken(
                 confidentialClientApplication,
                 clientCredentialRequestScopes,
                 "westus2"
