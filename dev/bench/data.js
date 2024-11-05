@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1730828277975,
+  "lastUpdate": 1730832592206,
   "repoUrl": "https://github.com/AzureAD/microsoft-authentication-library-for-js",
   "entries": {
     "msal-node client-credential Regression Test": [
@@ -13330,6 +13330,44 @@ window.BENCHMARK_DATA = {
             "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsLastItemInTheCache",
             "value": 186540,
             "range": "±1.99%",
+            "unit": "ops/sec",
+            "extra": "221 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "hemoral@microsoft.com",
+            "name": "Hector Morales",
+            "username": "hectormmg"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "1bd3b55dcfd3b544359cc41ff58c63208fd52116",
+          "message": "Update CODEOWNERS (#7404)\n\nAdding @sameerag and @konstantin-msft as .pipelines codeowners",
+          "timestamp": "2024-11-05T10:44:11-08:00",
+          "tree_id": "73e58ad172955e325e24d7b8ee37631f8831a1e8",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/commit/1bd3b55dcfd3b544359cc41ff58c63208fd52116"
+        },
+        "date": 1730832590310,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsFirstItemInTheCache",
+            "value": 222879,
+            "range": "±1.46%",
+            "unit": "ops/sec",
+            "extra": "230 samples"
+          },
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsLastItemInTheCache",
+            "value": 194055,
+            "range": "±2.00%",
             "unit": "ops/sec",
             "extra": "221 samples"
           }
