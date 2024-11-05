@@ -39,7 +39,6 @@ import {
     CacheHelpers,
     StoreInCache,
     CacheError,
-    isAliasOfKnownMicrosoftAuthority,
     UrlString,
     CredentialEntity,
 } from "@azure/msal-common/browser";
@@ -95,7 +94,7 @@ export class BrowserCacheManager extends CacheManager {
         cacheConfig: Required<CacheOptions>,
         cryptoImpl: ICrypto,
         logger: Logger,
-        staticAuthorityOptions: StaticAuthorityOptions,
+        staticAuthorityOptions?: StaticAuthorityOptions,
         performanceClient?: IPerformanceClient
     ) {
         super(clientId, cryptoImpl, logger, staticAuthorityOptions);
@@ -103,13 +102,7 @@ export class BrowserCacheManager extends CacheManager {
         this.logger = logger;
         this.internalStorage = new MemoryStorage();
 
-        const isAAD = isAliasOfKnownMicrosoftAuthority(
-            UrlString.getDomainFromUrl(
-                staticAuthorityOptions.canonicalAuthority
-            )
-        );
         if (
-            isAAD &&
             this.cacheConfig.cacheLocation === BrowserCacheLocation.LocalStorage
         ) {
             this.logger.warning(
@@ -1964,9 +1957,6 @@ export const DEFAULT_BROWSER_CACHE_MANAGER = (
         clientId,
         cacheOptions,
         DEFAULT_CRYPTO_IMPLEMENTATION,
-        logger,
-        {
-            canonicalAuthority: Constants.DEFAULT_AUTHORITY,
-        }
+        logger
     );
 };

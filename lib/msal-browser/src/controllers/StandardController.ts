@@ -265,11 +265,7 @@ export class StandardController implements IController {
             nativeCacheOptions,
             this.browserCrypto,
             this.logger,
-            {
-                canonicalAuthority: formatAuthorityUri(
-                    this.config.auth.authority
-                ),
-            },
+            undefined,
             this.performanceClient
         );
 

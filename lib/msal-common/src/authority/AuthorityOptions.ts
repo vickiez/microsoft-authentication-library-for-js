@@ -19,9 +19,10 @@ export type AuthorityOptions = {
     authority?: string;
 };
 
-export type StaticAuthorityOptions = {
-    canonicalAuthority: string;
-    knownAuthorities?: Array<string>;
+export type StaticAuthorityOptions = Partial<
+    Pick<AuthorityOptions, "knownAuthorities">
+> & {
+    canonicalAuthority?: string;
     cloudDiscoveryMetadata?: CloudInstanceDiscoveryResponse;
 };
 

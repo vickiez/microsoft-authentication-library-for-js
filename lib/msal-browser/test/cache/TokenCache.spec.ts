@@ -82,10 +82,7 @@ describe("TokenCache tests", () => {
             TEST_CONFIG.MSAL_CLIENT_ID,
             cacheConfig,
             cryptoObj,
-            logger,
-            {
-                canonicalAuthority: TEST_CONFIG.validAuthority,
-            }
+            logger
         );
     });
 

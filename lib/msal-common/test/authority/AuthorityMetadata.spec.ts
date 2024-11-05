@@ -23,7 +23,6 @@ describe("AuthorityMetadata.ts Unit Tests", () => {
     describe("getAliasesFromStaticSources()", () => {
         describe("from config CloudDiscoveryMetadataResponse", () => {
             const staticAuthorityOptions: StaticAuthorityOptions = {
-                canonicalAuthority: TEST_CONFIG.validAuthority,
                 cloudDiscoveryMetadata: InstanceDiscoveryMetadata,
             };
             it("returns aliases for each cloud and tenant combination", () => {

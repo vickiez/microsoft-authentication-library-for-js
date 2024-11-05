@@ -27,4 +27,3 @@ export {
 export { StubPerformanceClient } from "./telemetry/performance/StubPerformanceClient.js";
 
 export { PopTokenGenerator } from "./crypto/PopTokenGenerator.js";
-export { isAliasOfKnownMicrosoftAuthority } from "./authority/Authority.js";

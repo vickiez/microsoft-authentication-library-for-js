@@ -106,11 +106,7 @@ export class UnknownOperatingContextController implements IController {
                   this.config.cache,
                   this.browserCrypto,
                   this.logger,
-                  {
-                      canonicalAuthority: formatAuthorityUri(
-                          this.config.auth.authority
-                      ),
-                  },
+                  undefined,
                   this.performanceClient
               )
             : DEFAULT_BROWSER_CACHE_MANAGER(
