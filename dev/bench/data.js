@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1730753736284,
+  "lastUpdate": 1730828277975,
   "repoUrl": "https://github.com/AzureAD/microsoft-authentication-library-for-js",
   "entries": {
     "msal-node client-credential Regression Test": [
@@ -13294,6 +13294,44 @@ window.BENCHMARK_DATA = {
             "range": "±1.94%",
             "unit": "ops/sec",
             "extra": "223 samples"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "87724641+Robbie-Microsoft@users.noreply.github.com",
+            "name": "Robbie-Microsoft",
+            "username": "Robbie-Microsoft"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "2e1e9d851841c73ae377bdc87f096036d51606da",
+          "message": "Enable New Client Credential Certificate E2E Tests on Pipeline (#7403)\n\nThis was meant to be included in #7367.\r\n\r\n[Corresponding 1P\r\nPR](https://identitydivision.visualstudio.com/DefaultCollection/IDDP/_git/msal-javascript-1p/pullrequest/15266)\r\n\r\nYou can click into the tests below and see that the new e2e tests\r\ncompleted successfully.",
+          "timestamp": "2024-11-05T12:32:24-05:00",
+          "tree_id": "60f5c794d408d166aa39b485a6ef012e770f7f40",
+          "url": "https://github.com/AzureAD/microsoft-authentication-library-for-js/commit/2e1e9d851841c73ae377bdc87f096036d51606da"
+        },
+        "date": 1730828276733,
+        "tool": "benchmarkjs",
+        "benches": [
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsFirstItemInTheCache",
+            "value": 191231,
+            "range": "±2.08%",
+            "unit": "ops/sec",
+            "extra": "222 samples"
+          },
+          {
+            "name": "ConfidentialClientApplication#acquireTokenByClientCredential-fromCache-resourceIsLastItemInTheCache",
+            "value": 186540,
+            "range": "±1.99%",
+            "unit": "ops/sec",
+            "extra": "221 samples"
           }
         ]
       }
