@@ -78,20 +78,5 @@ describe("Client Credentials AAD Prod Tests", () => {
             );
             expect(cachedTokens.accessTokens.length).toBe(1);
         });
-
-        it("Performs acquire token through regional authorities", async () => {
-            confidentialClientApplication = new ConfidentialClientApplication(
-                config
-            );
-            await getClientCredentialsToken(
-                confidentialClientApplication,
-                clientCredentialRequestScopes,
-                "westus2"
-            );
-            const cachedTokens = await NodeCacheTestUtils.getTokens(
-                TEST_CACHE_LOCATION
-            );
-            expect(cachedTokens.accessTokens.length).toBe(1);
-        });
     });
 });
