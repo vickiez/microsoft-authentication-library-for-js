@@ -177,7 +177,7 @@ describe("NestedAppAuthController.ts Class Unit Tests", () => {
             );
         });
 
-        it("acquireTokenSilent calls acquireTokenFromCach with no cache policy set", async () => {
+        it("acquireTokenSilent calls acquireTokenFromCache with no cache policy set", async () => {
             jest.spyOn(
                 NestedAppAuthController.prototype as any,
                 "acquireTokenFromCache"
@@ -226,6 +226,28 @@ describe("NestedAppAuthController.ts Class Unit Tests", () => {
             const response = await pca.acquireTokenSilent(testRequest);
 
             expect(response.accessToken).toEqual(testResponse.accessToken);
+        });
+
+        it("acquireTokenSilent ignores cache if forceRefresh is on", async () => {
+            mockBridge.addAuthResultResponse("GetToken", SILENT_TOKEN_RESPONSE);
+
+            const testRequest = {
+                scopes: [NAA_SCOPE],
+                account: testAccount,
+                forceRefresh: true,
+                correlationId: NAA_CORRELATION_ID,
+            };
+
+            const testTokenResponse = nestedAppAuthAdapter.fromNaaTokenResponse(
+                nestedAppAuthAdapter.toNaaTokenRequest(testRequest),
+                SILENT_TOKEN_RESPONSE,
+                0
+            );
+
+            const response = await pca.acquireTokenSilent(testRequest);
+
+            expect(response?.idToken).not.toBeNull();
+            expect(response.accessToken).toEqual(testTokenResponse.accessToken);
         });
 
         it("acquireTokenSilent sends the request to bridge if cache misses", async () => {
