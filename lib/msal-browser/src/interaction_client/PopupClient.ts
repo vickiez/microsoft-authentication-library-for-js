@@ -548,22 +548,20 @@ export class PopupClient extends StandardInteractionClient {
         popupWindowParent: Window
     ): Promise<string> {
         return new Promise<string>((resolve, reject) => {
-            setTimeout(() => {
-                this.logger.verbose(
-                    "PopupHandler.monitorPopupForHash - polling started"
+            this.logger.verbose(
+                "PopupHandler.monitorPopupForHash"
+            );
+            this.authChannel.onmessage = function (event) {
+                resolve(event.data);
+            }     
+            this.authChannel.onmessageerror = function (event) {
+                console.log('BroadcastChannel error', event.data);
+                reject(
+                    createBrowserAuthError(
+                        BrowserAuthErrorCodes.popupWindowError
+                    )
                 );
-                this.authChannel.onmessage = function (event) {
-                    resolve(event.data);
-                }     
-                this.authChannel.onmessageerror = function (event) {
-                    console.log('BroadcastChannel error', event.data);
-                    reject(
-                        createBrowserAuthError(
-                            BrowserAuthErrorCodes.popupWindowError
-                        )
-                    );
-                } 
-            }, this.config.system.pollIntervalMilliseconds);
+            }
         }).finally(() => {
             this.cleanPopup(popupWindow, popupWindowParent);
         });
