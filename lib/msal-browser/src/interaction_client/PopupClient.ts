@@ -564,55 +564,6 @@ export class PopupClient extends StandardInteractionClient {
                     );
                 } 
             }, this.config.system.pollIntervalMilliseconds);
-
-            // const intervalId = setInterval(() => {
-            //     // Window is closed
-            //     if (popupWindow.closed) {
-            //         this.logger.error(
-            //             "PopupHandler.monitorPopupForHash - window closed"
-            //         );
-            //         clearInterval(intervalId);
-            //         reject(
-            //             createBrowserAuthError(
-            //                 BrowserAuthErrorCodes.userCancelled
-            //             )
-            //         );
-            //         return;
-            //     }
-
-            //     let href = "";
-            //     try {
-            //         /*
-            //          * Will throw if cross origin,
-            //          * which should be caught and ignored
-            //          * since we need the interval to keep running while on STS UI.
-            //          */
-            //         href = popupWindow.location.href;
-            //     } catch (e) {}
-
-            //     // Don't process blank pages or cross domain
-            //     if (!href || href === "about:blank") {
-            //         return;
-            //     }
-            //     clearInterval(intervalId);
-
-            //     let responseString = "";
-            //     const responseType =
-            //         this.config.auth.OIDCOptions.serverResponseType;
-            //     if (popupWindow) {
-            //         if (responseType === ServerResponseType.QUERY) {
-            //             responseString = popupWindow.location.search;
-            //         } else {
-            //             responseString = popupWindow.location.hash;
-            //         }
-            //     }
-
-            //     this.logger.verbose(
-            //         "PopupHandler.monitorPopupForHash - popup window is on same origin as caller"
-            //     );
-
-            //     resolve(responseString);
-            // }, this.config.system.pollIntervalMilliseconds);
         }).finally(() => {
             this.cleanPopup(popupWindow, popupWindowParent);
         });
