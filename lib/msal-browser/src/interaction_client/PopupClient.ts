@@ -58,6 +58,7 @@ export type PopupParams = {
 export class PopupClient extends StandardInteractionClient {
     private currentWindow: Window | undefined;
     protected nativeStorage: BrowserCacheManager;
+    private authChannel: BroadcastChannel;
 
     constructor(
         config: BrowserConfiguration,
@@ -85,6 +86,7 @@ export class PopupClient extends StandardInteractionClient {
         // Properly sets this reference for the unload event.
         this.unloadWindow = this.unloadWindow.bind(this);
         this.nativeStorage = nativeStorageImpl;
+        this.authChannel = new BroadcastChannel('auth');
     }
 
     /**
@@ -546,58 +548,71 @@ export class PopupClient extends StandardInteractionClient {
         popupWindowParent: Window
     ): Promise<string> {
         return new Promise<string>((resolve, reject) => {
-            this.logger.verbose(
-                "PopupHandler.monitorPopupForHash - polling started"
-            );
-
-            const intervalId = setInterval(() => {
-                // Window is closed
-                if (popupWindow.closed) {
-                    this.logger.error(
-                        "PopupHandler.monitorPopupForHash - window closed"
-                    );
-                    clearInterval(intervalId);
+            setTimeout(() => {
+                this.logger.verbose(
+                    "PopupHandler.monitorPopupForHash - polling started"
+                );
+                this.authChannel.onmessage = function (event) {
+                    resolve(event.data);
+                }     
+                this.authChannel.onmessageerror = function (event) {
+                    console.log('BroadcastChannel error', event.data);
                     reject(
                         createBrowserAuthError(
-                            BrowserAuthErrorCodes.userCancelled
+                            BrowserAuthErrorCodes.popupWindowError
                         )
                     );
-                    return;
-                }
-
-                let href = "";
-                try {
-                    /*
-                     * Will throw if cross origin,
-                     * which should be caught and ignored
-                     * since we need the interval to keep running while on STS UI.
-                     */
-                    href = popupWindow.location.href;
-                } catch (e) {}
-
-                // Don't process blank pages or cross domain
-                if (!href || href === "about:blank") {
-                    return;
-                }
-                clearInterval(intervalId);
-
-                let responseString = "";
-                const responseType =
-                    this.config.auth.OIDCOptions.serverResponseType;
-                if (popupWindow) {
-                    if (responseType === ServerResponseType.QUERY) {
-                        responseString = popupWindow.location.search;
-                    } else {
-                        responseString = popupWindow.location.hash;
-                    }
-                }
-
-                this.logger.verbose(
-                    "PopupHandler.monitorPopupForHash - popup window is on same origin as caller"
-                );
-
-                resolve(responseString);
+                } 
             }, this.config.system.pollIntervalMilliseconds);
+
+            // const intervalId = setInterval(() => {
+            //     // Window is closed
+            //     if (popupWindow.closed) {
+            //         this.logger.error(
+            //             "PopupHandler.monitorPopupForHash - window closed"
+            //         );
+            //         clearInterval(intervalId);
+            //         reject(
+            //             createBrowserAuthError(
+            //                 BrowserAuthErrorCodes.userCancelled
+            //             )
+            //         );
+            //         return;
+            //     }
+
+            //     let href = "";
+            //     try {
+            //         /*
+            //          * Will throw if cross origin,
+            //          * which should be caught and ignored
+            //          * since we need the interval to keep running while on STS UI.
+            //          */
+            //         href = popupWindow.location.href;
+            //     } catch (e) {}
+
+            //     // Don't process blank pages or cross domain
+            //     if (!href || href === "about:blank") {
+            //         return;
+            //     }
+            //     clearInterval(intervalId);
+
+            //     let responseString = "";
+            //     const responseType =
+            //         this.config.auth.OIDCOptions.serverResponseType;
+            //     if (popupWindow) {
+            //         if (responseType === ServerResponseType.QUERY) {
+            //             responseString = popupWindow.location.search;
+            //         } else {
+            //             responseString = popupWindow.location.hash;
+            //         }
+            //     }
+
+            //     this.logger.verbose(
+            //         "PopupHandler.monitorPopupForHash - popup window is on same origin as caller"
+            //     );
+
+            //     resolve(responseString);
+            // }, this.config.system.pollIntervalMilliseconds);
         }).finally(() => {
             this.cleanPopup(popupWindow, popupWindowParent);
         });
@@ -762,6 +777,9 @@ export class PopupClient extends StandardInteractionClient {
     cleanPopup(popupWindow: Window, popupWindowParent: Window): void {
         // Close window.
         popupWindow.close();
+
+        // Close the broadcast channel
+        this.authChannel.close();
 
         // Remove window unload function
         popupWindowParent.removeEventListener(
