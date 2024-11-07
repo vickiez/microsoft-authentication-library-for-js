@@ -67,6 +67,7 @@ function getNavigationType(): NavigationTimingType | undefined {
 
 export class RedirectClient extends StandardInteractionClient {
     protected nativeStorage: BrowserCacheManager;
+    private authChannel = new BroadcastChannel('auth');
 
     constructor(
         config: BrowserConfiguration,
@@ -248,6 +249,9 @@ export class RedirectClient extends StandardInteractionClient {
                         "Back navigation event detected. Muting no_server_response error"
                     );
                 }
+                // Logout with popup case
+                this.authChannel.postMessage("");
+                window.close();
                 return null;
             }
 
@@ -394,7 +398,8 @@ export class RedirectClient extends StandardInteractionClient {
                 ResponseHandler.validateInteractionType(
                     response,
                     this.browserCrypto,
-                    InteractionType.Redirect
+                    // TODO: Use correct type depending on the situation
+                    InteractionType.Popup
                 );
             } catch (e) {
                 if (e instanceof AuthError) {
@@ -422,6 +427,11 @@ export class RedirectClient extends StandardInteractionClient {
 
         if (cachedHash) {
             response = UrlUtils.getDeserializedResponse(cachedHash);
+
+            // Login with popup case
+            this.authChannel.postMessage(cachedHash);
+            window.close();
+
             if (response) {
                 this.logger.verbose(
                     "Hash does not contain known properties, returning cached hash"
